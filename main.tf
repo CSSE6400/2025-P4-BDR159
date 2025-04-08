@@ -7,26 +7,26 @@ terraform {
     }
 }
 
-data "aws_ami" "latest" {
-  most_recent = true
-  owners = ["amazon"]
-  filter {
-    name = "name"
-    values = ["al2023-ami-2023*"]
-  }
-  filter {
-    name = "root-device-type"
-    values = ["ebs"]
-  }
-  filter {
-    name = "virtualization-type"
-    values = ["hvm"]
-  }
-  filter {
-    name = "architecture"
-    values = ["x86_64"]
-  }
-}
+# data "aws_ami" "latest" {
+#   most_recent = true
+#   owners = ["amazon"]
+#   filter {
+#     name = "name"
+#     values = ["al2023-ami-2023*"]
+#   }
+#   filter {
+#     name = "root-device-type"
+#     values = ["ebs"]
+#   }
+#   filter {
+#     name = "virtualization-type"
+#     values = ["hvm"]
+#   }
+#   filter {
+#     name = "architecture"
+#     values = ["x86_64"]
+#   }
+# }
 
 provider "aws" {
     region = "us-east-1"
@@ -41,7 +41,8 @@ provider "aws" {
 }
 
 resource "aws_instance" "hextris-server" {
-  ami = data.aws_ami.latest.id
+  # ami = data.aws_ami.latest.id
+  ami = "ami-08b5b3a93ed654d19"
   instance_type = "t2.micro"
   key_name = "vockey"
   user_data = file("./serve-hextris.sh")
